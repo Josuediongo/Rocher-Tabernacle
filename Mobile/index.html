@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recueil des chants</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <style>
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+      display: flex;
+      justify-content: space-around;
+      padding: 0.5rem 0;
+    }
+    .grid-card {
+      border: none;
+    }
+    .grid-card img {
+      background: #eee;
+      border-radius: 10px;
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body class="pb-5">
+
+  <div class="container mt-3">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h4 class="fw-bold">Recueil des chants</h4>
+      <a href="/ajouter-chant" class="btn btn-sm btn-warning">+ Ajouter</a>
+    </div>
+
+    <input type="text" class="form-control mb-3" placeholder="Recherché..." />
+
+    <div class="row g-3"><% categories.forEach(cat => { %>
+        <div class="col-6">
+          <div class="card grid-card p-2">
+            <img src="<%= cat.photo || '/images/placeholder.png' %>" alt="catégorie" />
+            <h6 class="mt-2"><%= cat.nom %></h6>
+            <small><%= cat.description %></small>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- Menu bas -->
+  <div class="bottom-nav">
+    <a href="/mobile" class="text-center">
+      <div>📖</div>
+      <small>Recueil</small>
+    </a>
+    <a href="/mobile/categories" class="text-center">
+      <div>📂</div>
+      <small>Catégories</small>
+    </a>
+  </div>
+
+</body>
+</html>
+
+
+

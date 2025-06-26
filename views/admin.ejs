@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Administration – Tabernacle du Rocher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/images/loo5.jpg">
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  rel="stylesheet"
+/>
+  <!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Font Awesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+
+  <style>
+    body { padding-top: 70px; background: #f8f9fa; }
+    section { display: none; }
+    @media (max-width:768px){ table{display:block;} }
+
+    /* Animation Bienvenue */
+    .welcome-container { overflow:hidden; white-space:nowrap; border-bottom:2px solid #0d6efd; padding:.5rem 0; margin-bottom:1rem; font-weight:700; font-size:1.8rem; color:#0d6efd; position:relative; height:3.2rem; }
+    .welcome-text    { display:inline-block; padding-left:100%; animation:slide 8s linear infinite; }
+    @keyframes slide  {0%{transform:translateX(0);}100%{transform:translateX(-100%);} }
+
+    /* Tables */
+    table { width:100%; background:#fff; border-radius:6px; overflow:hidden; }
+    thead th { background:#e3f2fd; color:#0d6efd; text-align:center; }
+    td, th    { text-align:center; padding:10px; vertical-align:middle; }
+    .table-img { width:60px; height:60px; object-fit:cover; border-radius:4px; }
+
+    /* Buttons */
+    .btn-sm               { border-radius:20px; padding:5px 8px; }
+    .btn-outline-primary  { color:#0d6efd; border-color:#0d6efd; }
+    .btn-outline-success  { color:#198754; border-color:#198754; }
+    .btn-outline-danger   { color:#dc3545; border-color:#dc3545; }
+    .btn-outline-info     { color:#17a2b8; border-color:#17a2b8; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-white shadow-sm">
+    <div class="container">
+      <img src="/images/loo5.jpg" width="30" alt="Logo">
+      <a class="navbar-brand" href="#">TABERNACLE DU ROCHER</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="nav">
+        <ul class="navbar-nav ms-auto align-items-center">
+          <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="#categorie">Catégories</a></li>
+          <li class="nav-item"><a class="nav-link" href="#chants">Chants</a></li>
+          <li class="nav-item"><a class="nav-link" href="#favoris">Favoris</a></li>
+          <li class="nav-item ms-3">
+            <a class="btn btn-outline-danger" href="/logout">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container mb-5">
+    <!-- Accueil -->
+    <section id="accueil" class="mb-5">
+      <div class="card shadow-lg border-0 p-4 bg-light">
+        <div class="row align-items-center">
+          <div class="col-md-2 text-center">
+            <img src="/images/loo5.jpg"
+                 class="img-fluid rounded-circle"
+                 style="max-width:100px"
+                 alt="Logo">
+          </div>
+          <div class="col-md-10">
+            <div class="welcome-container">
+              <span class="welcome-text">BIENVENUE, <%= utilisateur.nom %> !</span>
+            </div>
+            <p class="lead">
+              Vous êtes administrateur. Gérez chants, catégories et favoris.
+            </p>
+            <div class="mt-3">
+              <a href="#categorie" class="btn btn-outline-primary me-2">
+                <i class="fas fa-folder-open"></i> Catégories
+              </a>
+              <a href="#chants" class="btn btn-outline-success">
+                <i class="fas fa-music"></i> Chants
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compteurs -->
+      <div class="row text-center mt-4">
+        <div class="col-md-4">
+          <div class="card shadow-sm p-3">
+            <h4 class="text-primary">
+              <i class="fas fa-folder"></i> <%= categories.length %> Catégories
+            </h4>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm p-3">
+            <h4 class="text-success">
+              <i class="fas fa-music"></i> <%= chants.length %> Chants
+            </h4>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm p-3">
+            <h4 class="text-danger">
+              <i class="fas fa-heart"></i> <%= favoris.length %> Favoris
+            </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+     
+    <!-- Catégories -->
+    <section id="categorie" class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2><i class="fas fa-folder-open"></i> Catégories</h2>
+        <!-- Lien corrigé vers add_categorie.ejs -->
+        <a href="/categories/new" class="btn btn-outline-primary">
+          <i class="fas fa-plus"></i> Ajouter une catégorie
+        </a>
+      </div>
+      <input id="searchCategorie"
+             class="form-control mb-3"
+             placeholder="Rechercher une catégorie..." />
+      <table class="table table-striped table-hover">
+        <!-- Outils du tableau de bord Catégories -->
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <!-- Titre du tableau de bord -->
+  <h3 class="m-0">Tableau de bord Catégories</h3>
+  <!-- Boutons d'export / impression -->
+  <div class="btn-group" role="group" aria-label="Outils tableau">
+    <button type="button" class="btn btn-outline-secondary btn-sm" title="Exporter en PDF">
+      <i class="fas fa-file-pdf"></i>
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" title="Exporter en Excel">
+      <i class="fas fa-file-excel"></i>
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" title="Imprimer">
+      <i class="fas fa-print"></i>
+    </button>
+  </div>
+</div>
+
+
+
+        <thead>
+          <tr><th>Nom</th><th>Description</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="categorieTableBody">
+          <% categories.forEach(cat => { %>
+          <tr>
+            <td><%= cat.nom %></td>
+            <td><%= cat.description %></td>
+            <td>
+              <form action="/categories/<%= cat.id %>/delete"
+                    method="POST"
+                    class="d-inline"
+                    onsubmit="return confirm('Supprimer cette catégorie ?')">
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+              <a href="/categories/<%= cat.id %>/edit"
+                 class="btn btn-sm btn-outline-primary">
+                <i class="fas fa-edit"></i>
+              </a>
+              <button class="btn btn-sm btn-outline-info"
+                      onclick="voirCategorie(<%= JSON.stringify(cat) %>)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <ul id="paginationCategorie" class="pagination"></ul>
+    </section>
+
+    <!-- Chants -->
+    <section id="chants" class="mb-5">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h2><i class="fas fa-music"></i> Chants</h2>
+        <a href="/admin/chants/new" class="btn btn-outline-success">
+          <i class="fas fa-plus"></i> Ajouter un chant
+        </a>
+      </div>
+      <input id="searchChants"
+             class="form-control mb-3"
+             placeholder="Rechercher un chant..." />
+      <table class="table table-striped table-hover">
+        <!-- Outils du tableau de bord Chants -->
+<div class="d-flex justify-content-between align-items-center mb-2">
+  <h3 class="m-0">Tableau de bord Chants</h3>
+  <div class="btn-group" role="group" aria-label="Outils tableau">
+    <button type="button" class="btn btn-outline-secondary btn-sm" title="Exporter en PDF">
+      <i class="fas fa-file-pdf"></i>
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" title="Exporter en Excel">
+      <i class="fas fa-file-excel"></i>
+    </button>
+    <button type="button" class="btn btn-outline-secondary btn-sm" title="Imprimer">
+      <i class="fas fa-print"></i>
+    </button>
+  </div>
+</div>
+
+
+
+        <thead>
+          <tr>
+            <th>Titre</th><th>Langue</th><th>Compositeur</th>
+            <th>Page</th><th>Catégorie</th><th>Image</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="chantsTableBody">
+          <% chants.forEach(chant => { %>
+          <tr>
+            <td><%= chant.titre %></td>
+            <td><%= chant.langue %></td>
+            <td><%= chant.compositeur %></td>
+            <td><%= chant.numero_page || '-' %></td>
+            <td><%= chant.categorie_nom || 'N/A' %></td>
+            <td>
+              <% if (chant.image) { %>
+                <img src="<%= chant.image %>"
+                     class="table-img"
+                     alt="Miniature">
+              <% } else { %>
+                <span class="text-muted">–</span>
+              <% } %>
+            </td>
+            <td>
+              <form action="/chants/<%= chant.id %>/delete"
+                    method="POST"
+                    class="d-inline"
+                    onsubmit="return confirm('Supprimer ce chant ?')">
+                <button class="btn btn-sm btn-outline-danger">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+              <a href="/admin/chants/<%= chant.id %>/edit"
+                 class="btn btn-sm btn-outline-primary">
+                <i class="fas fa-edit"></i>
+              </a>
+              <button class="btn btn-sm btn-outline-info"
+                      onclick="voirChant(
+                        <%= JSON.stringify(chant.titre) %>,
+                        <%= JSON.stringify(chant.compositeur) %>,
+                        <%= JSON.stringify(chant.paroles) %>,
+                        <%= JSON.stringify(chant.image) %>,
+                        <%= chant.numero_page %>
+                      )">
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <ul id="paginationChant" class="pagination justify-content-center mt-3"></ul>
+    </section>
+
+    <!-- Favoris -->
+    <section id="favoris">
+      <h2><i class="fas fa-heart"></i> Favoris</h2>
+      <table class="table table-striped table-hover">
+        <thead><tr><th>Utilisateur</th><th>Chant</th><th>Date</th></tr></thead>
+        <tbody>
+          <% favoris.forEach(fav => { %>
+          <tr>
+            <td><%= fav.utilisateur_id %></td>
+            <td><%= fav.chant_id %></td>
+            <td><%= fav.date_ajout.toLocaleString() %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <!-- Modales -->
+  <div class="modal fade" id="categorieModal">
+    <div class="modal-dialog"><div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Détails catégorie</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="categorieContent"></div>
+    </div></div>
+  </div>
+
+  <div class="modal fade" id="parolesModal">
+    <div class="modal-dialog modal-lg"><div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Paroles du chant</h5>
+        <button class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="parolesContent"></div>
+    </div></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Affichage des sections
+    const sections = ['accueil','categorie','chants','favoris'];
+    document.addEventListener('DOMContentLoaded', () => {
+      sections.forEach(id =>
+        document.getElementById(id).style.display = id==='accueil'?'block':'none'
+      );
+      document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const t = link.getAttribute('href').substring(1);
+          sections.forEach(id =>
+            document.getElementById(id).style.display = id===t?'block':'none'
+          );
+        });
+      });
+      setupSearchAndPagination('categorieTableBody','searchCategorie','paginationCategorie',5);
+      setupSearchAndPagination('chantsTableBody','searchChants','paginationChant',5);
+    });
+
+    // Recherche + pagination
+    function setupSearchAndPagination(tbodyId,inputId,pagId,perPage) {
+      const rows = Array.from(document.getElementById(tbodyId).querySelectorAll('tr'));
+      let filtered = rows, page=1;
+      const inp = document.getElementById(inputId), pag=document.getElementById(pagId);
+      function render(p) {
+        page = p;
+        const start = (p-1)*perPage, end = p*perPage;
+        rows.forEach(r =>
+          r.style.display =
+            filtered.includes(r) && filtered.indexOf(r)>=start && filtered.indexOf(r)<end
+              ? '' : 'none'
+        );
+        pag.innerHTML = '';
+        const total = Math.ceil(filtered.length/perPage);
+        for(let i=1;i<=total;i++){
+          pag.innerHTML += `<li class="page-item${i===page?' active':''}">
+                              <a class="page-link" href="#">${i}</a>
+                            </li>`;
+        }
+        pag.querySelectorAll('a').forEach((a,i)=>
+          a.addEventListener('click', ev=>{ ev.preventDefault(); render(i+1); })
+        );
+      }
+      inp.addEventListener('input', () => {
+        const q = inp.value.toLowerCase();
+        filtered = rows.filter(r => r.innerText.toLowerCase().includes(q));
+        render(1);
+      });
+      render(1);
+    }
+
+    // Modales
+    function voirCategorie(cat) {
+      document.getElementById('categorieContent').innerHTML =
+        `<h4>${cat.nom}</h4><p>${cat.description}</p>${cat.photo?`<img src="${cat.photo}" class="img-fluid">`:''}`;
+      new bootstrap.Modal('#categorieModal').show();
+    }
+    function voirChant(titre,compo,paroles,img,page) {
+      document.getElementById('parolesContent').innerHTML =
+        `<h4>${titre}</h4><h5>${compo}</h5><pre>${paroles}</pre>${
+          page?`<p><strong>Page :</strong>${page}</p>`:''
+        }${img?`<img src="${img}" class="img-fluid">`:''}`;
+      new bootstrap.Modal('#parolesModal').show();
+    }
+  </script>
+</body>
+</html>

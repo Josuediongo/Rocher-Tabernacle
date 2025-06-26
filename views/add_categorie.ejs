@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ajouter une catégorie</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="icon" href="/images/logo3.jpg">
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <!-- Font Awesome -->
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    rel="stylesheet"
+  />
+</head>
+<body class="bg-light">
+  <div class="container mt-5">
+    <h2 class="mb-4 text-primary">
+      <i class="fas fa-plus-circle"></i> Ajouter une catégorie
+    </h2>
+
+    <form action="/categories" method="POST" enctype="multipart/form-data">
+      <!-- Nom de la catégorie -->
+      <div class="mb-3">
+        <label for="nom" class="form-label">Nom</label>
+        <input
+          type="text"
+          name="nom"
+          id="nom"
+          class="form-control"
+          placeholder="Nom de la catégorie"
+          required
+        />
+      </div>
+
+      <!-- Description -->
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea
+          name="description"
+          id="description"
+          class="form-control"
+          rows="4"
+          placeholder="Description"
+        ></textarea>
+      </div>
+
+      <!-- Photo -->
+      <div class="mb-3">
+        <label for="photo" class="form-label">Photo</label>
+        <input
+          type="file"
+          name="photo"
+          id="photo"
+          class="form-control"
+          accept="image/*"
+        />
+      </div>
+
+      <!-- Actions -->
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success">
+          <i class="fas fa-save"></i> Enregistrer
+        </button>
+        <!-- Retour fixe vers /admin -->
+        <a href="/admin" class="btn btn-secondary">
+          <i class="fas fa-arrow-left"></i> Retour à l’accueil
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
